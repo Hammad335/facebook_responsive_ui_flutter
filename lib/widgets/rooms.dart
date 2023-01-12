@@ -3,6 +3,8 @@ import 'package:facebook_ui_flutter/widgets/profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:facebook_ui_flutter/models/models.dart';
 
+import 'widgets.dart';
+
 class Rooms extends StatelessWidget {
   final List<User> onlineUser;
 
@@ -10,29 +12,40 @@ class Rooms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      color: Colors.white,
-      child: ListView.builder(
-        itemCount: 1 + onlineUser.length,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: _CreateRoomButton(),
+    final bool isDesktop = Responsive.isDesktop(context);
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5 : 0),
+      elevation: isDesktop ? 1 : 0,
+      shape: isDesktop
+          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+          : null,
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: isDesktop ? BorderRadius.circular(10) : null,
+        ),
+        child: ListView.builder(
+          itemCount: 1 + onlineUser.length,
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: _CreateRoomButton(),
+              );
+            }
+            final User user = onlineUser[index - 1];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ProfileAvatar(
+                imageUrl: user.imageUrl,
+                isActive: true,
+              ),
             );
-          }
-          final User user = onlineUser[index - 1];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: ProfileAvatar(
-              imageUrl: user.imageUrl,
-              isActive: true,
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }

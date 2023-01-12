@@ -9,55 +9,66 @@ class CreatePostContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-      color: Colors.white,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ProfileAvatar(imageUrl: currentUser.imageUrl),
-              const SizedBox(width: 10),
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration.collapsed(
-                    hintText: 'what\'s on your mind',
+    final bool isDesktop = Responsive.isDesktop(context);
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5 : 0),
+      elevation: isDesktop ? 1 : 0,
+      shape: isDesktop
+          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+          : null,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: isDesktop ? BorderRadius.circular(10) : null,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ProfileAvatar(imageUrl: currentUser.imageUrl),
+                const SizedBox(width: 10),
+                const Expanded(
+                  child: TextField(
+                    decoration: InputDecoration.collapsed(
+                      hintText: 'what\'s on your mind',
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-          const Divider(
-            height: 10,
-            thickness: 0.5,
-          ),
-          Container(
-            height: 40,
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                CustomIconButton(
-                  iconData: Icons.videocam,
-                  labelText: 'Live',
-                  iconColor: Colors.red,
-                ),
-                VerticalDivider(width: 10),
-                CustomIconButton(
-                  iconData: Icons.photo_library,
-                  labelText: 'Photo',
-                  iconColor: Colors.green,
-                ),
-                VerticalDivider(width: 10),
-                CustomIconButton(
-                  iconData: Icons.video_call,
-                  labelText: 'Room',
-                  iconColor: Colors.purpleAccent,
                 )
               ],
             ),
-          )
-        ],
+            const Divider(
+              height: 10,
+              thickness: 0.5,
+            ),
+            Container(
+              height: 40,
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  CustomIconButton(
+                    iconData: Icons.videocam,
+                    labelText: 'Live',
+                    iconColor: Colors.red,
+                  ),
+                  VerticalDivider(width: 10),
+                  CustomIconButton(
+                    iconData: Icons.photo_library,
+                    labelText: 'Photo',
+                    iconColor: Colors.green,
+                  ),
+                  VerticalDivider(width: 10),
+                  CustomIconButton(
+                    iconData: Icons.video_call,
+                    labelText: 'Room',
+                    iconColor: Colors.purpleAccent,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

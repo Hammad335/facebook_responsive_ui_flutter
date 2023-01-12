@@ -2,6 +2,7 @@ import 'package:facebook_ui_flutter/config/palette.dart';
 import 'package:facebook_ui_flutter/models/models.dart';
 import 'package:facebook_ui_flutter/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CustomAppBar extends StatelessWidget {
   final User currentUser;
@@ -33,22 +34,46 @@ class CustomAppBar extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'facebook',
-            style: TextStyle(
-              color: Palette.facebookBlue,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -1.2,
+          const Expanded(
+            child: Text(
+              'facebook',
+              style: TextStyle(
+                color: Palette.facebookBlue,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -1.2,
+              ),
             ),
           ),
           SizedBox(
             width: 600,
+            height: double.infinity,
             child: CustomTabBar(
               icons: icons,
               selectedIndex: selectedIndex,
               onTap: onTap,
+              isBottomIndicator: true,
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                UserCard(user: currentUser),
+                const SizedBox(width: 12),
+                CircleButton(
+                  iconData: Icons.search,
+                  iconSize: 30,
+                  onPressed: () => print('Search'),
+                ),
+                CircleButton(
+                  iconData: MdiIcons.facebookMessenger,
+                  iconSize: 30,
+                  onPressed: () => print('Messenger'),
+                ),
+              ],
             ),
           ),
         ],
